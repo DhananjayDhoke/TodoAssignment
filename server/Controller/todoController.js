@@ -25,8 +25,10 @@ const Todo = require("../Model/todoSchema")
   
   exports.deleteTodo = async(req, res) => {
     try {
-        const todo = await Todo.findByIdAndDelete(req.param.id);
-       return res.status(200).send({message:"sucsessfull deleted todo"});
+        const todo = await Todo.findByIdAndDelete(req.params.id).lean().exec();
+        
+       return res.status(200).send({message:"sucsessfull deleted todo",
+      todo});
     } catch (error) {
         return res.status(500).send(error.message); 
         
